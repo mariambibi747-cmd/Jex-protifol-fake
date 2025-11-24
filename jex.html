@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jex | Developer & Entrepreneur</title>
+    
+    <!-- Tailwind CSS (Design ke liye) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Icons (FontAwesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts (Space Grotesk font) -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Configuration for Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',   // Dark Blue Background
+                            accent: '#38bdf8', // Light Blue Highlight
+                            purple: '#818cf8', // Purple Highlight
+                            surface: '#1e293b' // Card Background
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* --- Custom Styles --- */
+
+        /* Blinking Cursor for Typewriter */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* Hero Section Animation (Load hote hi chalega) */
+        @keyframes loadUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-animate {
+            opacity: 0; /* Shuru mein hidden */
+            animation: loadUp 0.8s ease-out forwards; /* Load hote hi dikhega */
+        }
+
+        /* Scroll Animation (Jab scroll karenge tab dikhega) */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Glass Effect for Cards */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Gradient Text Effect */
+        .text-gradient {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Scrollbar Customization */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-slate-300 font-sans antialiased overflow-x-hidden selection:bg-brand-accent selection:text-white">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10 shadow-lg">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 hero-animate" style="animation-delay: 0s;">
+                    <a href="#" class="text-2xl font-bold text-white tracking-wider hover:text-brand-accent transition-colors">JEX<span class="text-brand-accent">.</span></a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8 hero-animate" style="animation-delay: 0.1s;">
+                        <a href="#about" class="hover:text-brand-accent transition-colors px-3 py-2 rounded-md text-sm font-medium">About</a>
+                        <a href="#work" class="hover:text-brand-accent transition-colors px-3 py-2 rounded-md text-sm font-medium">Work</a>
+                        <a href="#skills" class="hover:text-brand-accent transition-colors px-3 py-2 rounded-md text-sm font-medium">Skills</a>
+                        <a href="#personality" class="hover:text-brand-accent transition-colors px-3 py-2 rounded-md text-sm font-medium">Personality</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="-mr-2 flex md:hidden hero-animate" style="animation-delay: 0.1s;">
+                    <button type="button" onclick="toggleMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none transition-colors">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Dropdown Menu -->
+        <div class="md:hidden hidden bg-brand-surface border-b border-white/10" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="#work" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Work</a>
+                <a href="#skills" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Skills</a>
+                <a href="#personality" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Personality</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (TOP PART) -->
+    <section class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        
+        <!-- Background Glow Blobs -->
+        <div class="absolute top-20 left-10 w-72 h-72 bg-brand-accent/20 rounded-full blur-[100px] -z-10"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-brand-purple/20 rounded-full blur-[100px] -z-10"></div>
+
+        <div class="max-w-6xl mx-auto px-4 text-center z-10">
+            
+            <!-- Badge -->
+            <div class="hero-animate mb-6 inline-block px-4 py-1.5 rounded-full border border-brand-accent/30 bg-brand-accent/10 text-brand-accent text-sm font-semibold tracking-wide" style="animation-delay: 0.1s;">
+                HELLO, I'M JEX
+            </div>
+            
+            <!-- Main Title with Typing Effect -->
+            <h1 class="hero-animate text-5xl md:text-7xl font-bold text-white mb-6 leading-tight" style="animation-delay: 0.2s;">
+                Building <br class="md:hidden" /> <span class="text-gradient typing-cursor" id="typewriter"></span>
+            </h1>
+            
+            <!-- Subtitle -->
+            <p class="hero-animate mt-4 max-w-2xl mx-auto text-lg md:text-xl text-slate-400 leading-relaxed" style="animation-delay: 0.3s;">
+                Indian student, developer, and online entrepreneur creating smart, scalable, and automation-driven digital tools.
+            </p>
+            
+            <!-- Buttons -->
+            <div class="hero-animate mt-10 flex flex-col sm:flex-row justify-center gap-4" style="animation-delay: 0.4s;">
+                <a href="#work" class="px-8 py-3.5 bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold rounded-lg transition-all transform hover:-translate-y-1 shadow-lg shadow-brand-accent/20">
+                    View Work
+                </a>
+                <a href="#skills" class="px-8 py-3.5 border border-slate-600 hover:border-white hover:bg-white/5 text-white rounded-lg transition-all transform hover:-translate-y-1">
+                    My Skills
+                </a>
+            </div>
+        </div>
+
+        <!-- Down Arrow Indicator -->
+        <div class="hero-animate absolute bottom-8 left-1/2 transform -translate-x-1/2 text-slate-500 animate-bounce" style="animation-delay: 1s;">
+            <i class="fas fa-chevron-down text-2xl"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-brand-surface/30">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="reveal-on-scroll">
+                    <h2 class="text-3xl font-bold text-white mb-6"><span class="text-brand-accent">01.</span> Early Life & Background</h2>
+                    <div class="space-y-4 text-lg text-slate-300 leading-relaxed">
+                        <p>
+                            While continuing his studies, Jex has simultaneously worked on multiple digital projects. From an early stage, he developed hands-on experience in coding, automation, and online systems.
+                        </p>
+                        <p>
+                            His interests naturally grew toward simplifying complex digital processes using bots, AI, and optimization tools. Even as a student, he balanced academics with real-world digital development.
+                        </p>
+                        <div class="pt-4 border-l-4 border-brand-purple pl-4 mt-4 bg-brand-surface/50 p-4 rounded-r-lg">
+                            <h3 class="text-white font-semibold text-lg">The Mission</h3>
+                            <p class="text-sm mt-1 text-slate-400">To prioritize speed, efficiency, and user-friendly design in every project.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Code Visual Element -->
+                <div class="reveal-on-scroll relative mt-10 md:mt-0">
+                    <div class="glass-card p-6 rounded-2xl relative z-10 transform rotate-2 hover:rotate-0 transition-transform duration-500 shadow-2xl">
+                        <div class="flex items-center justify-between mb-4 border-b border-white/10 pb-2">
+                            <span class="text-xs text-slate-400">developer_profile.js</span>
+                            <div class="flex space-x-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                        </div>
+                        <code class="text-sm font-mono leading-loose block">
+                            <span class="text-purple-400">const</span> <span class="text-yellow-300">Jex</span> = {<br>
+                            &nbsp;&nbsp;role: <span class="text-green-400">'Student Developer'</span>,<br>
+                            &nbsp;&nbsp;focus: [<span class="text-orange-300">'AI'</span>, <span class="text-orange-300">'Automation'</span>],<br>
+                            &nbsp;&nbsp;status: <span class="text-blue-300">'Building Tools...'</span>,<br>
+                            &nbsp;&nbsp;motto: <span class="text-green-400">'Smart & Scalable'</span><br>
+                            };
+                        </code>
+                    </div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full bg-brand-accent/10 blur-3xl -z-10 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work" class="py-24">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-on-scroll">
+                <h2 class="text-3xl font-bold text-white mb-4"><span class="text-brand-accent">02.</span> Career & Work</h2>
+                <p class="max-w-2xl mx-auto text-slate-400">
+                    Jex gained recognition online through his automation bots, management tools, and AI-assisted systems.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project 1 -->
+                <div class="glass-card p-6 rounded-xl hover:translate-y-[-5px] transition-transform duration-300 reveal-on-scroll group">
+                    <div class="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                        <i class="fas fa-robot text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Automation Bots</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Custom designed bots for Telegram and other online platforms to automate repetitive tasks efficiently.</p>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="glass-card p-6 rounded-xl hover:translate-y-[-5px] transition-transform duration-300 reveal-on-scroll group" style="transition-delay: 100ms;">
+                    <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4 text-purple-400 group-hover:bg-purple-500 group-hover:text-white transition-colors">
+                        <i class="fas fa-brain text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">AI Systems</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">AI-based management and intelligent moderation systems for smarter community handling.</p>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="glass-card p-6 rounded-xl hover:translate-y-[-5px] transition-transform duration-300 reveal-on-scroll group" style="transition-delay: 200ms;">
+                    <div class="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center mb-4 text-green-400 group-hover:bg-green-500 group-hover:text-white transition-colors">
+                        <i class="fas fa-chart-line text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Social Optimization</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Tools designed to boost engagement and optimize social media workflows effectively.</p>
+                </div>
+
+                 <!-- Project 4 -->
+                 <div class="glass-card p-6 rounded-xl hover:translate-y-[-5px] transition-transform duration-300 reveal-on-scroll group">
+                    <div class="w-12 h-12 bg-yellow-500/10 rounded-lg flex items-center justify-center mb-4 text-yellow-400 group-hover:bg-yellow-500 group-hover:text-white transition-colors">
+                        <i class="fas fa-server text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Backend Tools</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Robust backend utilities used for digital operations and managing online businesses.</p>
+                </div>
+
+                 <!-- Project 5 -->
+                 <div class="glass-card p-6 rounded-xl hover:translate-y-[-5px] transition-transform duration-300 reveal-on-scroll group" style="transition-delay: 100ms;">
+                    <div class="w-12 h-12 bg-pink-500/10 rounded-lg flex items-center justify-center mb-4 text-pink-400 group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                        <i class="fas fa-bolt text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Utility Apps</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Applications improving workflow, speed, and overall productivity for everyday users.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 bg-brand-surface/30">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-white mb-8 reveal-on-scroll"><span class="text-brand-accent">03.</span> Skills & Expertise</h2>
+            
+            <div class="flex flex-wrap justify-center gap-4 reveal-on-scroll">
+                <!-- HTML/CSS/JS -->
+                <div class="group px-6 py-3 rounded-full border border-slate-700 bg-brand-dark hover:border-orange-500 hover:shadow-[0_0_15px_rgba(249,115,22,0.3)] transition-all cursor-default flex items-center gap-2">
+                    <i class="fab fa-html5 text-orange-500"></i> <span class="text-slate-300 group-hover:text-white">Web Dev</span>
+                </div>
+                <!-- Python -->
+                <div class="group px-6 py-3 rounded-full border border-slate-700 bg-brand-dark hover:border-blue-500 hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-all cursor-default flex items-center gap-2">
+                    <i class="fab fa-python text-blue-500"></i> <span class="text-slate-300 group-hover:text-white">Python</span>
+                </div>
+                <!-- Bots -->
+                <div class="group px-6 py-3 rounded-full border border-slate-700 bg-brand-dark hover:border-green-500 hover:shadow-[0_0_15px_rgba(34,197,94,0.3)] transition-all cursor-default flex items-center gap-2">
+                    <i class="fas fa-robot text-green-500"></i> <span class="text-slate-300 group-hover:text-white">Bot Automation</span>
+                </div>
+                <!-- AI -->
+                <div class="group px-6 py-3 rounded-full border border-slate-700 bg-brand-dark hover:border-purple-500 hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] transition-all cursor-default flex items-center gap-2">
+                    <i class="fas fa-microchip text-purple-500"></i> <span class="text-slate-300 group-hover:text-white">AI Integration</span>
+                </div>
+                <!-- Social Media -->
+                <div class="group px-6 py-3 rounded-full border border-slate-700 bg-brand-dark hover:border-pink-500 hover:shadow-[0_0_15px_rgba(236,72,153,0.3)] transition-all cursor-default flex items-center gap-2">
+                    <i class="fas fa-hashtag text-pink-500"></i> <span class="text-slate-300 group-hover:text-white">Social Media</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Personality & Presence -->
+    <section id="personality" class="py-24 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <!-- Personality Card -->
+                <div class="glass-card p-8 rounded-2xl reveal-on-scroll border-l-4 border-l-brand-accent">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-user-astronaut mr-3 text-brand-accent"></i> Personality
+                    </h2>
+                    <ul class="space-y-5">
+                        <li class="flex items-start">
+                            <div class="bg-brand-accent/10 p-1 rounded mt-0.5 mr-3">
+                                <i class="fas fa-check text-brand-accent text-xs"></i>
+                            </div>
+                            <span class="text-slate-300">Often described as cool, funny, and sometimes serious among peers.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="bg-brand-acc
